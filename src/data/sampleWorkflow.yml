@@ -1,0 +1,35 @@
+name: Student Management CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  checkout:
+    name: Checkout source
+    demo_status: success
+    runs-on: ubuntu-latest
+  install:
+    name: Install dependencies
+    needs: [checkout]
+    demo_status: success
+    runs-on: ubuntu-latest
+  lint:
+    name: Code quality check
+    needs: [install]
+    demo_status: success
+    runs-on: ubuntu-latest
+  test:
+    name: Run unit tests
+    needs: [install]
+    demo_status: failure
+    runs-on: ubuntu-latest
+  build:
+    name: Production build
+    needs: [lint, test]
+    demo_status: blocked
+    runs-on: ubuntu-latest
+  deploy:
+    name: Deploy application
+    needs: [build]
+    demo_status: pending
+    runs-on: ubuntu-latest
