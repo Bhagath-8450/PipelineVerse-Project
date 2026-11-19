@@ -1,0 +1,31 @@
+
+name: PipelineVerse Failure Analysis Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Start build
+        run: echo "Starting PipelineVerse test build"
+
+      - name: Simulate build failure
+        run: |
+          echo "Testing failure detection"
+          exit 1
+
+      - name: Complete build
+        run: echo "Build completed"
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy application
+        run: echo "Deploying application"
